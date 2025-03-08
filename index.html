@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{{ url_for('add_plant') }}" method="POST" class="mb-4">
+    <div class="row">
+        <div class="col">
+            <input type="text" name="title" class="form-control" placeholder="Plant Name" required>
+        </div>
+        <div class="col">
+            <input type="date" name="date" class="form-control" required>
+        </div>
+        <div class="col">
+            <input type="number" name="rating" class="form-control" placeholder="Rating (1-5)" min="1" max="5">
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Add Plant</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Rating</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for plant in plants %}
+        <tr>
+            <td>{{ plant.title }}</td>
+            <td>{{ plant.status }}</td>
+            <td>{{ plant.date }}</td>
+            <td>{{ plant.rating }}</td>
+            <td>
+                <a href="{{ url_for('update_plant', id=plant.id) }}" class="btn btn-sm btn-warning">Toggle Status</a>
+                <a href="{{ url_for('delete_plant', id=plant.id) }}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
